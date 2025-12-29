@@ -2,25 +2,31 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Santa Catarina Manji Gang</title>
+<title>SCMG</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
+*{margin:0;padding:0;box-sizing:border-box}
 body{
-    margin:0;
+    background:#050505;
+    color:#eee;
     font-family:Arial,Helvetica,sans-serif;
-    background:#0b0b0b;
-    color:#f1f1f1;
+    overflow-x:hidden;
 }
 header{
-    background:linear-gradient(90deg,#8b0000,#000);
-    padding:50px;
     text-align:center;
+    padding:80px 20px;
+    background:linear-gradient(90deg,#700000,#000);
 }
 .logo{
-    max-width:280px;
-    margin-top:20px;
-    filter:drop-shadow(0 0 15px gold);
+    margin-top:80px;
+    width:260px;
+    animation:float 4s ease-in-out infinite;
+    filter:drop-shadow(0 0 25px crimson);
+}
+@keyframes float{
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-18px)}
 }
 section{
     max-width:1000px;
@@ -29,73 +35,75 @@ section{
 }
 h2{
     color:#ff2a2a;
-    border-left:5px solid #ff2a2a;
+    border-left:5px solid red;
     padding-left:10px;
 }
 .card{
-    background:#141414;
+    background:#101010;
     padding:25px;
     border-radius:10px;
     margin-top:20px;
+    animation:fade 1s ease;
 }
-ul{list-style:none;padding:0}
-ul li::before{content:"• ";color:#ff2a2a}
+@keyframes fade{
+    from{opacity:0;transform:translateY(30px)}
+    to{opacity:1;transform:translateY(0)}
+}
+ul{list-style:none}
+li::before{content:"• ";color:red}
+
 footer{
-    background:#000;
     text-align:center;
     padding:20px;
+    background:#000;
     color:#777;
 }
 
-/* WATCHER */
 #watcher{
     position:fixed;
     inset:0;
-    background:rgba(0,0,0,.97);
+    background:rgba(0,0,0,.95);
     display:none;
+    flex-direction:column;
     justify-content:center;
     align-items:center;
-    flex-direction:column;
-    z-index:999999;
+    z-index:99999;
     color:red;
     font-family:monospace;
-    text-align:center;
 }
 .eye{
-    width:140px;
-    height:80px;
-    background:#fff;
+    width:160px;
+    height:85px;
+    background:white;
     border-radius:50%;
     overflow:hidden;
-    position:relative;
-    animation:blink 6s infinite;
+    animation:blink 5s infinite;
 }
 .pupil{
     width:35px;
     height:35px;
-    background:#000;
+    background:black;
     border-radius:50%;
-    position:absolute;
-    top:22px;
-    left:52px;
+    margin:25px auto;
     animation:look 3s infinite alternate;
 }
 @keyframes blink{
-    0%,90%,100%{height:80px}
-    92%,96%{height:10px}
+    0%,92%,100%{height:85px}
+    94%,96%{height:12px}
 }
 @keyframes look{
-    from{transform:translateX(-10px)}
-    to{transform:translateX(10px)}
+    from{transform:translateX(-25px)}
+    to{transform:translateX(25px)}
 }
 #warning{
     margin-top:25px;
+    text-align:center;
     animation:pulse 1.5s infinite;
 }
 @keyframes pulse{
-    0%{opacity:.5}
+    0%{opacity:.4}
     50%{opacity:1}
-    100%{opacity:.5}
+    100%{opacity:.4}
 }
 </style>
 </head>
@@ -104,22 +112,12 @@ footer{
 
 <header>
     <h1>Santa Catarina Manji Gang</h1>
-    <p>Pela união, pela irmandade.</p>
-    <img src="https://files.catbox.moe/k207zr.png" class="logo">
+    <p>Lealdade • Honra • Respeito</p>
+    <img class="logo" src="https://files.catbox.moe/k207zr.png">
 </header>
 
 <section>
-    <h2>📌 Identidade</h2>
-    <div class="card">
-        <p><b>Sigla:</b> SCMG</p>
-        <p><b>Fundação:</b> 05 de Novembro</p>
-        <p><b>Local:</b> Tubarão – SC</p>
-        <p><b>Inspiração:</b> Manji</p>
-    </div>
-</section>
-
-<section>
-    <h2>👑 Fundadores</h2>
+    <h2>Fundadores</h2>
     <div class="card">
         <ul>
             <li>Drako</li>
@@ -132,7 +130,7 @@ footer{
 </section>
 
 <section>
-    <h2>🏷️ Hierarquia</h2>
+    <h2>Hierarquia</h2>
     <div class="card">
         <ul>
             <li>Comandante Geral</li>
@@ -147,39 +145,45 @@ footer{
     </div>
 </section>
 
-<footer>© 2025 — Santa Catarina Manji Gang</footer>
+<footer>© 2025 — SCMG</footer>
 
-<!-- WATCHER -->
 <div id="watcher">
     <div class="eye"><div class="pupil"></div></div>
     <div id="warning">
         <p>YOU ARE BEING WATCHED</p>
         <p id="ip">Loading IP...</p>
-        <p>Do not leak information.</p>
+        <p>DO NOT LEAK INFORMATION</p>
     </div>
 </div>
 
 <script>
 const ascii = `
-░░░░░▄▄▄▄▀▀▀▀▀▀▀▀▄▄▄▄▄▄░░░░░
-░░░░█░░░░▒▒▒▒▒▒▒▒▒▒▒▒░░▀▀▄░░░
-░░░░█░░░▒▒▒▒▒▒░░░░░░░░▒▒▒░░█░
-░░░█░░░░░░▄██▀▄▄░░░░░▄▄▄░░░░█
+░░░░░▄▄▄▄▀▀▀▀▀▀▀▀▄▄▄▄▄▄░░░░░░░
+░░░░░█░░░░▒▒▒▒▒▒▒▒▒▒▒▒░░▀▄░░░░
+░░░░█░░░▒▒▒▒▒▒░░░░░░░░▒▒▒░░█░░
+░░░█░░░░░░▄██▀▄▄░░░░░▄▄▄░░░░█░
 ░▄▀▒▄▄▄▒░█▀▀▀▀▄▄█░░░██▄▄█░░░░█
 █░▒█▒▄░▀▄▄▄▀░░░░░░░░█░░░▒▒▒▒▒█
-█░▒█░█▀▄▄░░░░░█▀░░░░▀▄░░▄▀▀▀▄▒█
-░█░▀▄░█▄░█▀▄▄░▀░▀▀░▄▄▀░░░░█░░█
+█░▒█░█▀▄▄░░░░░█▀░░░░▀▄░░▄▀▀▀▄█
+░█░▀▄░█▄░█▀▄▄░▀░▀▀░▄▄▀░░░░█░█░
 ░░█░░░▀▄▀█▄▄░█▀▀▀▄▄▄▄▀▀█▀██░█░
-░░░█░░░░██░░▀█▄▄▄█▄▄█▄████░█░
+░░░█░░░░██░░▀█▄▄▄█▄▄█▄████░█░░
 ░░░░█░░░░▀▀▄░█░░░█░█▀██████░█░
 ░░░░░▀▄░░░░░▀▀▄▄▄█▄█▄█▄█▄▀░░█░
 ░░░░░░░▀▄▄░▒▒▒▒░░░░░░░░░░▒░░░█
 ░░░░░░░░░░▀▀▄▄░▒▒▒▒▒▒▒▒▒▒░░░░█
 ░░░░░░░░░░░░░░▀▄▄▄▄▄░░░░░░░░█
+
+██╗   ██╗ ██████╗ ██╗   ██╗
+██║   ██║██╔═══██╗██║   ██║
+██║   ██║██║   ██║██║   ██║
+╚██╗ ██╔╝██║   ██║██║   ██║
+ ╚████╔╝ ╚██████╔╝╚██████╔╝
+  ╚═══╝   ╚═════╝  ╚═════╝
 `;
 
 (function(){
-    const dev=new Image();
+    const dev = new Image();
     Object.defineProperty(dev,'id',{
         get(){
             document.getElementById("watcher").style.display="flex";
@@ -193,10 +197,10 @@ const ascii = `
 
 function getIP(){
     fetch("https://api.ipify.org?format=json")
-        .then(r=>r.json())
-        .then(d=>{
-            document.getElementById("ip").innerText="IP: "+d.ip;
-        });
+    .then(r=>r.json())
+    .then(d=>{
+        document.getElementById("ip").innerText="IP: "+d.ip;
+    });
 }
 setInterval(getIP,10000);
 </script>
