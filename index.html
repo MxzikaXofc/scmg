@@ -8,85 +8,103 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Orbitron',sans-serif}
-body{background:black;color:white;overflow:hidden}
+body{background:black;color:white;overflow-x:hidden}
 
-canvas{position:fixed;inset:0;z-index:-1}
-
+/* FUNDO */
 .bg{
 position:fixed;
 inset:0;
-background:radial-gradient(circle,#200 0%,#000 70%);
-animation:bg 6s infinite alternate
+background:radial-gradient(circle at center,#200 0%,#000 70%);
+animation:bg 8s infinite alternate;
+z-index:-2;
 }
-@keyframes bg{0%{filter:hue-rotate(0)}100%{filter:hue-rotate(120deg)}}
+@keyframes bg{0%{filter:hue-rotate(0)}100%{filter:hue-rotate(160deg)}}
 
+/* INTRO */
 #intro{
 position:fixed;
 inset:0;
+background:black;
 display:flex;
 flex-direction:column;
-align-items:center;
 justify-content:center;
-background:black;
+align-items:center;
 z-index:9999;
-animation:fadeout 1s ease 5s forwards
+animation:fadeOut 1.2s ease 5s forwards;
 }
 
 #symbol{
 font-size:140px;
 color:red;
-animation:spin 2s infinite linear, glow 1.5s infinite alternate
+animation:spin 2s linear infinite, glow 1.5s infinite alternate;
 }
 
 #intro h1{
-margin-top:20px;
-letter-spacing:4px;
-font-size:28px
+margin-top:25px;
+letter-spacing:6px;
+font-size:26px;
+opacity:.9;
 }
 
 @keyframes spin{to{transform:rotate(360deg)}}
-@keyframes glow{from{text-shadow:0 0 10px red}to{text-shadow:0 0 40px red}}
-@keyframes fadeout{to{opacity:0;pointer-events:none}}
+@keyframes glow{from{text-shadow:0 0 10px red}to{text-shadow:0 0 45px red}}
+@keyframes fadeOut{to{opacity:0;pointer-events:none}}
 
+/* HEADER */
 header{
 text-align:center;
-padding:20px;
-font-size:40px;
-letter-spacing:5px
+margin-top:40px;
+font-size:38px;
+letter-spacing:6px;
 }
 
+/* SIMBOLO FIXO */
 #mini{
 position:fixed;
-left:10px;
+left:15px;
 top:50%;
 transform:translateY(-50%);
-font-size:40px;
+font-size:36px;
 color:red;
-opacity:.8
+opacity:.85;
+animation:pulse 2s infinite;
 }
 
+@keyframes pulse{
+0%{opacity:.4}
+50%{opacity:1}
+100%{opacity:.4}
+}
+
+/* SEÇÕES */
 .section{
-margin:80px auto;
 max-width:1000px;
-padding:30px;
-background:rgba(0,0,0,.8);
+margin:120px auto;
+padding:40px;
+background:rgba(0,0,0,.85);
 border:1px solid red;
-box-shadow:0 0 30px red;
+box-shadow:0 0 40px red;
 opacity:0;
-transform:scale(.7);
-transition:1s
+transform:translateY(80px) scale(.9);
+transition:1s;
 }
-.section.show{opacity:1;transform:scale(1)}
 
-li{margin:8px 0}
+.section.show{
+opacity:1;
+transform:translateY(0) scale(1);
+}
+
+li{margin:10px 0}
 li::before{content:"☠ ";color:red}
 
+/* OLHO */
 #eye{
 position:fixed;
 bottom:20px;
 right:20px;
 color:red;
-animation:blink 1.2s infinite
+font-size:14px;
+animation:blink 1.2s infinite;
 }
 @keyframes blink{0%,100%{opacity:.2}50%{opacity:1}}
 </style>
@@ -112,18 +130,19 @@ animation:blink 1.2s infinite
 <li>Sigla: SCMG</li>
 <li>Criação: 2024</li>
 <li>Origem: Santa Catarina</li>
-<li>Fundadores: Conselho Central</li>
-<li>Objetivo: União, respeito e domínio territorial</li>
+<li>Fundadores: Drako, Venu, Mth, Yohannan, Misa</li>
+<li>Lema: Pela união, pela irmandade</li>
 </ul>
 </div>
 
 <div class="section">
 <h2>REGRAS</h2>
 <ul>
-<li>Não trair</li>
+<li>Não ameaçar civis</li>
+<li>Não exibir armas</li>
+<li>Não abusar de poder</li>
+<li>Não desrespeitar superiores</li>
 <li>Não vazar informações</li>
-<li>Respeitar superiores</li>
-<li>Não causar problemas externos</li>
 <li>Honrar o nome da gangue</li>
 </ul>
 </div>
@@ -140,65 +159,30 @@ animation:blink 1.2s infinite
 
 <div id="eye">👁 VOCÊ ESTÁ SENDO OBSERVADO</div>
 
-<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
-
 <script>
-const scene=new THREE.Scene()
-const cam=new THREE.PerspectiveCamera(70,innerWidth/innerHeight,0.1,1000)
-const renderer=new THREE.WebGLRenderer({canvas:document.createElement("canvas"),alpha:true})
-document.body.appendChild(renderer.domElement)
-renderer.setSize(innerWidth,innerHeight)
-
-const geo=new THREE.TorusGeometry(10,2,16,100)
-const mat=new THREE.MeshBasicMaterial({color:0xff0000,wireframe:true})
-const obj=new THREE.Mesh(geo,mat)
-scene.add(obj)
-cam.position.z=30
-
-function anim(){
-requestAnimationFrame(anim)
-obj.rotation.x+=0.01
-obj.rotation.y+=0.02
-renderer.render(scene,cam)
-}
-anim()
-
-const obs=new IntersectionObserver(e=>{
-e.forEach(i=>{if(i.isIntersecting)i.target.classList.add("show")})
+/* ANIMAÇÃO DAS SEÇÕES */
+const obs = new IntersectionObserver(e=>{
+e.forEach(x=>{
+if(x.isIntersecting) x.target.classList.add("show")
 })
+},{threshold:.2})
 document.querySelectorAll(".section").forEach(s=>obs.observe(s))
 
-/* SEGURANÇA */
-let req=Number(localStorage.getItem("req"))||0
-req++
-localStorage.setItem("req",req)
-if(req>50){document.body.innerHTML="<h1 style='color:red;text-align:center'>ACESSO BLOQUEADO</h1>"}
-
-setTimeout(()=>localStorage.removeItem("req"),60000)
-
-document.addEventListener("contextmenu",e=>e.preventDefault())
-document.addEventListener("keydown",e=>{
-if(e.key==="F12"||e.ctrlKey&&e.shiftKey||e.ctrlKey&&e.key==="u"){
-e.preventDefault()
-console.log("VOCÊ ESTÁ SENDO OBSERVADO")
-}
-})
-
-const troll=`
-⣿⣿⣿⣿⣿⣿⡟⠁⠄⠄⠄⠄⣠⣤⣴⣶⣶⣶⣶⣤⡀⠈⠙⢿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⡟⠄⠄⠄⠄⠄⣸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣆⠄⠈⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⠁⠄⠄⠄⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠄⠄⢺⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⡄⠄⠄⠄⠙⠻⠿⣿⣿⣿⣿⠿⠿⠛⠛⠻⣿⡄⠄⣾⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⡇⠄⠄⠁ 👁️ ⠄⢹⣿⡗⠄ 👁️ ⢄⡀⣾⢀⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⡇⠘⠄⠄⠄⢀⡀⠄⣿⣿⣷⣤⣤⣾⣿⣿⣿⣧⢸⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⡇⠄⣰⣿⡿⠟⠃⠄⣿⣿⣿⣿⣿⡛⠿⢿⣿⣷⣾⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⡄⠈⠁⠄⠄⠄⠄⠻⠿⢛⣿⣿⠿⠂⠄⢹⢹⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⣿⡐⠐⠄⠄⣠⣀⣀⣚⣯⣵⣶⠆⣰⠄⠞⣾⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⣿⣷⡄⠄⠄⠈⠛⠿⠿⠿⣻⡏⢠⣿⣎⣾⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⡿⠟⠛⠄⠄⠄⠄⠙⣛⣿⣿⣵⣿⡿⢹⡟⣿⣿⣿⣿⣿
-
-You are being watched !
+/* ASCII CONSOLE */
+const troll = `
+⠀⠀⠀⠀⠀⠀⢀⣴⣶⣶⣦⣄⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⢠⣾⣿⡿⠟⠛⠛⠛⠻⠿⢿⣶⣄⠀
+⠀⠀⠀⠀⢀⣴⣿⡿⠁⠀⠀⠀⠀⠀⠀⠀⠙⢷⣄
+⠀⠀⠀⢠⣾⣿⠟⠀⠀⠀⣀⣀⣀⣀⠀⠀⠀⠈⢿⣆
+⠀⠀⢠⣿⣿⠏⠀⠀⠀⣾⣿⣿⣿⣿⣷⡄⠀⠀⠘⣿⣆
+⠀⠀⣾⣿⡟⠀⠀⠀⢸⣿⣿⣿⣿⣿⣿⣧⠀⠀⠀⢹⣿⡆
+⠀⢸⣿⣿⡇⠀⠀⠀⢸⣿⣿⣿⣿⣿⣿⣿⠀⠀⠀⠈⣿⣷
+⠀⢸⣿⣿⣧⠀⠀⠀⠘⢿⣿⣿⣿⣿⡿⠟⠀⠀⠀⢠⣿⣿
+⠀⠀⢻⣿⣿⣧⡀⠀⠀⠀⠈⠉⠉⠉⠀⠀⠀⢀⣴⣿⣿⠏
+⠀⠀⠀⠙⢿⣿⣿⣦⣀⠀⠀⠀⠀⠀⠀⣠⣴⣿⣿⠟⠋
+⠀⠀⠀⠀⠀⠈⠙⠻⠿⠿⠶⠶⠶⠶⠶⠶⠿⠿⠟⠋⠁
 `
+
 setInterval(()=>{
 console.clear()
 console.log("%c"+troll,"color:red;font-size:11px")
