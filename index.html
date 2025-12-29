@@ -80,12 +80,6 @@ footer{
     left:52px;
     animation:look 3s infinite alternate;
 }
-#ascii{
-    margin-top:20px;
-    white-space:pre;
-    font-size:12px;
-    color:red;
-}
 @keyframes blink{
     0%,90%,100%{height:80px}
     92%,96%{height:10px}
@@ -93,6 +87,15 @@ footer{
 @keyframes look{
     from{transform:translateX(-10px)}
     to{transform:translateX(10px)}
+}
+#warning{
+    margin-top:25px;
+    animation:pulse 1.5s infinite;
+}
+@keyframes pulse{
+    0%{opacity:.5}
+    50%{opacity:1}
+    100%{opacity:.5}
 }
 </style>
 </head>
@@ -111,6 +114,7 @@ footer{
         <p><b>Sigla:</b> SCMG</p>
         <p><b>Fundação:</b> 05 de Novembro</p>
         <p><b>Local:</b> Tubarão – SC</p>
+        <p><b>Inspiração:</b> Manji</p>
     </div>
 </section>
 
@@ -145,10 +149,18 @@ footer{
 
 <footer>© 2025 — Santa Catarina Manji Gang</footer>
 
+<!-- WATCHER -->
 <div id="watcher">
     <div class="eye"><div class="pupil"></div></div>
+    <div id="warning">
+        <p>YOU ARE BEING WATCHED</p>
+        <p id="ip">Loading IP...</p>
+        <p>Do not leak information.</p>
+    </div>
+</div>
 
-<pre id="ascii">
+<script>
+const ascii = `
 ░░░░░▄▄▄▄▀▀▀▀▀▀▀▀▄▄▄▄▄▄░░░░░
 ░░░░█░░░░▒▒▒▒▒▒▒▒▒▒▒▒░░▀▀▄░░░
 ░░░░█░░░▒▒▒▒▒▒░░░░░░░░▒▒▒░░█░
@@ -164,22 +176,19 @@ footer{
 ░░░░░░░▀▄▄░▒▒▒▒░░░░░░░░░░▒░░░█
 ░░░░░░░░░░▀▀▄▄░▒▒▒▒▒▒▒▒▒▒░░░░█
 ░░░░░░░░░░░░░░▀▄▄▄▄▄░░░░░░░░█
-</pre>
+`;
 
-<p>YOU ARE BEING WATCHED</p>
-<p id="ip">Loading IP...</p>
-<p>Do not leak information.</p>
-</div>
-
-<script>
 (function(){
     const dev=new Image();
     Object.defineProperty(dev,'id',{
         get(){
             document.getElementById("watcher").style.display="flex";
+            console.clear();
+            console.log(ascii);
+            console.log("YOU ARE BEING WATCHED");
         }
     });
-    setInterval(()=>{console.log(dev);},1000);
+    setInterval(()=>console.log(dev),1000);
 })();
 
 function getIP(){
